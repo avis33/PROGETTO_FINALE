@@ -1,0 +1,4 @@
+fastapifastapi
+uvicorn
+mysql-connector-python # mariadb
+mariadb

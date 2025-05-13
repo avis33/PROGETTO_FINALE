@@ -1,0 +1,5 @@
+uvicorn 
+fastapi
+requests
+jinja2
+python-multipart # per i form
