@@ -1,4 +1,4 @@
-fastapifastapi
+fastapi
 uvicorn
 mysql-connector-python # mariadb
 mariadb

@@ -1,10 +1,21 @@
 version: "3.8"
 
-services: 
+services:
   frontend:
     build: ./frontend
     container_name: frontend
     ports:
       - "8001:8001"
+    depends_on:
+      - backend
     environment:
       - BASE_URL=http://backend:8000
+  backend:
+    build: ./backend
+    container_name: backend
+    ports:
+      - "8003:8000"
+    #depends_on:
+    #  - mariadb
+    
+
