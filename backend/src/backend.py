@@ -2,4 +2,7 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-#TEST TEST TEST 
+@app.get("/")
+def index():
+    print("Running server")
+    return "I'm running the server"
