@@ -18,7 +18,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia il codice sorgente (quindi src) dentro /app/backend
-COPY src /app/backend
+COPY src/backend /app/backend
 
 EXPOSE 8000
 
