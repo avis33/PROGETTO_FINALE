@@ -1,6 +1,31 @@
 version: "3.8"
 
 services:
+  mariadb:
+    image: mariadb:11.1 
+    container_name: mariadb 
+    environment:
+      MYSQL_ROOT_PASSWORD: Paoletto
+      MYSQL_DATABASE: cinema_db
+      MYSQL_USER: vincenzo
+      MYSQL_PASSWORD: Paoletto2
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mariadb_data:/var/lib/mysql
+      - ./mariadb_init:/docker-entrypoint-initdb.d
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports:
+      - "11434:11434"  # Porta predefinita di Ollama
+    volumes:
+      - ./ollama_data:/root/.ollama  # Salva i modelli in modo persistente
+    environment:
+      - OLLAMA_MODELS=gemma:1b-it-qat  # Forza il download del modello all'avvio
+    restart: unless-stopped  # Riavvia automaticamente se crasha
+
   frontend:
     build: ./frontend
     container_name: frontend
@@ -10,12 +35,19 @@ services:
       - backend
     environment:
       - BASE_URL=http://backend:8000
+
   backend:
     build: ./backend
     container_name: backend
     ports:
       - "8003:8000"
-    #depends_on:
-    #  - mariadb
-    
-
+    depends_on:
+      - mariadb
+      - ollama  # Dipende da Ollama se il backend lo usa
+    environment:
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USER=vincenzo
+      - DB_PASSWORD=Paoletto2
+      - DB_NAME=cinema_db
+      - OLLAMA_HOST=http://ollama:11434  # URL per connettersi a Ollama
