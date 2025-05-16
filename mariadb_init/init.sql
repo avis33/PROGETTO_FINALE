@@ -88,7 +88,7 @@ INSERT INTO movies (titolo, anno, genere, id_director) VALUES
 ('Back to the Future', 1985, 'Fantascienza', (SELECT id_director FROM directors WHERE nome = 'Robert Zemeckis')),
 ('The Lord of the Rings: The Fellowship of the Ring', 2001, 'Fantasy', (SELECT id_director FROM directors WHERE nome = 'Peter Jackson')),
 ('The Lord of the Rings: The Return of the King', 2003, 'Fantasy', (SELECT id_director FROM directors WHERE nome = 'Peter Jackson')),
-('Schindler\'s List', 1993, 'Dramma', (SELECT id_director FROM directors WHERE nome = 'Steven Spielberg')),
+('Schindler''s List', 1993, 'Dramma', (SELECT id_director FROM directors WHERE nome = 'Steven Spielberg')),
 ('Inglourious Basterds', 2009, 'Guerra', (SELECT id_director FROM directors WHERE nome = 'Quentin Tarantino')),
 ('Whiplash', 2014, 'Dramma', (SELECT id_director FROM directors WHERE nome = 'Damien Chazelle')),
 ('Joker', 2019, 'Dramma', (SELECT id_director FROM directors WHERE nome = 'Todd Phillips')),
