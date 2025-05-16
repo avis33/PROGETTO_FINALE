@@ -172,8 +172,8 @@ INSERT INTO distribuzioni (id_movie, id_piattaforma) VALUES
 ((SELECT id_movie FROM movies WHERE titolo = 'The Lord of the Rings: The Return of the King'), (SELECT id_piattaforma FROM piattaforme WHERE nome = 'NOW')),
 
 -- Schindler's List: Amazon Prime Video, NOW
-((SELECT id_movie FROM movies WHERE titolo = 'Schindler\'s List'), (SELECT id_piattaforma FROM piattaforme WHERE nome = 'Amazon Prime Video')),
-((SELECT id_movie FROM movies WHERE titolo = 'Schindler\'s List'), (SELECT id_piattaforma FROM piattaforme WHERE nome = 'NOW')),
+((SELECT id_movie FROM movies WHERE titolo = 'Schindler''s List'), (SELECT id_piattaforma FROM piattaforme WHERE nome = 'Amazon Prime Video')),
+((SELECT id_movie FROM movies WHERE titolo = 'Schindler''s List'), (SELECT id_piattaforma FROM piattaforme WHERE nome = 'NOW')),
 
 -- Inglourious Basterds: Amazon Prime Video, Netflix
 ((SELECT id_movie FROM movies WHERE titolo = 'Inglourious Basterds'), (SELECT id_piattaforma FROM piattaforme WHERE nome = 'Amazon Prime Video')),
