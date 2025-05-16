@@ -13,6 +13,7 @@ def index(request:Request):
         response = requests.get(f"{BASE_URL}/") 
         response.raise_for_status()
         res = response.json()
+        print(res)
     except requests.RequestException as e:
         res = None
         print("Errore nella chiamata dell'api", e)
