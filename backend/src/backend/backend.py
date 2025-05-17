@@ -4,6 +4,8 @@ import mariadb
 from typing import List
 from backend.models.models import SchemaSummaryItem, SearchItem, AddRequest, AddResponse
 from backend.db.queries import  get_schema_summary, inserisci_riga
+
+
 import os
 OLLAMA_BASE_URL = os.getenv("OLLAMA_HOST", "http://ollama:11434")
 OLLAMA_URL = f"{OLLAMA_BASE_URL}/api/chat"  

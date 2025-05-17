@@ -4,7 +4,7 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # ENV PYTHONPATH aggiunto per far riconoscere 'backend' come pacchetto
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/app/backend
 
 # Installa le dipendenze di sistema per mariadb
 RUN apt-get update && apt-get install -y \
@@ -20,7 +20,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copia il codice sorgente (quindi src) dentro /app/backend
 COPY src/backend /app/backend
 
-EXPOSE 8000
+EXPOSE 8003
 
 # Avvia Uvicorn indicando il modulo backend.backend:app
-CMD ["uvicorn", "backend.backend:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "backend.backend:app", "--host", "0.0.0.0", "--port", "8003"]
