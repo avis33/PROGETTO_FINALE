@@ -4,13 +4,14 @@ WORKDIR /app
 
 # Installa le dipendenze
 COPY requirements.txt .
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia i sorgenti e templates
-COPY src /app
-COPY templates /app/templates
+COPY src/ ./src/
+COPY templates/ ./templates
 
 EXPOSE 8001
 
-CMD ["uvicorn", "frontend:app", "--host", "0.0.0.0", "--port", "8001"]
+CMD ["uvicorn", "src.frontend:app", "--host", "0.0.0.0", "--port", "8001"]
 

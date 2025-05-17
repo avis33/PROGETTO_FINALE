@@ -8,10 +8,12 @@ ENV PYTHONPATH=/app/backend
 
 # Installa le dipendenze di sistema per mariadb
 RUN apt-get update && apt-get install -y \
+    curl \
     gcc \
     libmariadb-dev \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
+    
 
 # Copia requirements e installa dipendenze Python
 COPY requirements.txt .

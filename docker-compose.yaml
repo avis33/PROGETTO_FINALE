@@ -39,15 +39,27 @@ services:
       start_period: 15s
 
   frontend:
-    build: ./frontend
-    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/requirements.txt:/app/requirements.txt:ro
+      - ./frontend/templates:/app/templates  
     ports:
       - "8001:8001"
     depends_on:
       backend:
         condition: service_healthy
     environment:
-      - BASE_URL=http://backend:8000
+      - BASE_URL=http://backend:8003
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8001 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    restart: on-failure
 
   backend:
     build: ./backend
@@ -67,7 +79,7 @@ services:
       - DB_NAME=cinema_db
       - OLLAMA_HOST=http://ollama:11434  # URL per connettersi a Ollama
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8003/docs || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:8003/docs || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
