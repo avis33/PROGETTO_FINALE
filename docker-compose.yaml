@@ -14,6 +14,12 @@ services:
     volumes:
       - ./mariadb_data:/var/lib/mysql
       - ./mariadb_init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
 
   ollama:
     image: ollama/ollama:latest
@@ -25,6 +31,12 @@ services:
     environment:
       - OLLAMA_MODELS=gemma:1b-it-qat  # Forza il download del modello all'avvio
     restart: unless-stopped  # Riavvia automaticamente se crasha
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
 
   frontend:
     build: ./frontend
@@ -32,7 +44,8 @@ services:
     ports:
       - "8001:8001"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     environment:
       - BASE_URL=http://backend:8000
 
@@ -42,8 +55,10 @@ services:
     ports:
       - "8003:8000"
     depends_on:
-      - mariadb
-      - ollama  # Dipende da Ollama se il backend lo usa
+      mariadb:
+        condition: service_healthy
+      ollama:
+        condition: service_healthy
     environment:
       - DB_HOST=mariadb
       - DB_PORT=3306
@@ -51,3 +66,9 @@ services:
       - DB_PASSWORD=Paoletto2
       - DB_NAME=cinema_db
       - OLLAMA_HOST=http://ollama:11434  # URL per connettersi a Ollama
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/docs"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
