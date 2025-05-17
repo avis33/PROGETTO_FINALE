@@ -34,7 +34,7 @@ def index():
             status_code=500,
             detail=f"Error communicating with Ollama at {OLLAMA_URL}: {str(e)}"
         )
-        
+
 @app.get("/schema_summary", response_model=List[SchemaSummaryItem])
 def schema_summary():
     # Chiama la funzione get_schema_summary dal modulo db
@@ -45,7 +45,7 @@ def schema_summary():
         for row in results
     ]
 
-@app.get("/search/{question}", response_model=List[SearchItem])
+@app.post("/search", response_model=List[SearchItem])
 def search(question: str):
     try:
         print()
