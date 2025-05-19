@@ -8,7 +8,7 @@ from backend.db.queries import  get_schema_summary, inserisci_riga
 
 import os
 OLLAMA_BASE_URL = os.getenv("OLLAMA_HOST", "http://ollama:11434")
-OLLAMA_URL = f"{OLLAMA_BASE_URL}/api/chat"  
+OLLAMA_URL = f"{OLLAMA_BASE_URL}/api/generate"  
 MODEL_NAME = "gemma3:1b-it-qat"
 
 app = FastAPI()
@@ -29,7 +29,7 @@ def index():
         res.raise_for_status()
         data = res.json()
         print(data)
-        return {"answer": data["message"]["content"].strip()}
+        return {"answer": data.get("response","").strip()}
     except requests.exceptions.RequestException as e:
         print(e)
         raise HTTPException(

@@ -21,22 +21,23 @@ services:
       retries: 5
       start_period: 20s
 
+  
+
   ollama:
-    image: ollama/ollama:latest
+    build: ./ollama
     container_name: ollama
     ports:
-      - "11434:11434"  # Porta predefinita di Ollama
+      - "11434:11434"
     volumes:
-      - ./ollama_data:/root/.ollama  # Salva i modelli in modo persistente
-    environment:
-      - OLLAMA_MODELS=gemma:1b-it-qat  # Forza il download del modello all'avvio
-    restart: unless-stopped  # Riavvia automaticamente se crasha
+      - ./ollama_data:/root/.ollama
+    restart: unless-stopped
     healthcheck:
       test: ["CMD", "ollama", "list"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 15s
+
 
   frontend:
     build:
